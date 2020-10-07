@@ -1,0 +1,206 @@
+<section class="deck-slide">
+    <h1>Component Web APIs</h1>
+</section>
+<section>
+    <h2>Web APIs</h2>
+    <p>Web components basieren auf drei standardisierten Web APIs:</p>
+    <ul>
+        <li>Custom elements</li>
+        <li>Shadow DOM</li>
+        <li>HTML templates</li>
+    </ul>
+</section>
+<section>
+    <section>
+        <h2>Shadow DOM</h2>
+        <p>Web components beinhalten gekapselte Funktionalität. Shadow DOM ermöglicht dies.</p>
+    </section>
+    <section>
+        <h3>DOM (Document Object Model)</h3>
+        <div style="display: flex; align-items: center">
+             <pre>
+                <code class="hljs xml" data-trim contenteditable data-noescape>
+                    &lt;html&gt;
+                        &lt;body&gt;
+                            &lt;ul&gt;
+                                &lt;li&gt;Item 1&lt;/li&gt;
+                                &lt;li&gt;Item 2&lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/body&gt;
+                    &lt;/html&gt;
+                </code>
+            </pre>
+            <p style="margin: 2rem">wird transformiert zu</p>
+            <p>&#8594;</p>
+            <img src="../img/dom.svg" alt="dom"/>
+        </div>
+        <aside class="notes">
+            Markup wird zu DOM
+            http://www.webgraphviz.com/
+            digraph H {
+            "html" -> "body"
+            "body" -> "ul"
+            "ul" -> "li: Item 1"
+            "ul" -> "li: Item 2"
+            }
+        </aside>
+    </section>
+    <section>
+        <p>Shadow DOM ermöglicht es, einen versteckten DOM-Baum einem Element im normalen DOM Tree anzuhängen.
+            Der Baum beginnt mit einer shadow root und kann beliebigen Inhalt enthalten.</p>
+    </section>
+    <section>
+        <h3>Shadow DOM Terminologie</h3>
+        <ul>
+            <li><b>Shadow host:</b> Der normale DOM-Knoten, an dem das Shadow DOM angehängt ist</li>
+            <li><b>Shadow tree:</b> Der DOM-Baum innerhalb des Shadow DOM</li>
+            <li><b>Shadow boundary:</b> Wo das shadow DOM aufhört und das normale DOM anfängt</li>
+            <li><b>Shadow root:</b> Der Wurzel-Knoten des shadow tree</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Anwendung</h3>
+        <pre>
+             <code class="hljs javascript" data-trim contenteditable data-noescape>
+                 const container = document.createElement('div');
+                 container.attachShadow({mode: 'open'});
+                 const text = document.createElement('p');
+                 text.innerHTML = 'Hello from shadow DOM!';
+                 const style = document.createElement('style');
+                 style.textContent = 'p { color: red }';
+                 container.shadowRoot.append(style, text);
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>Browser support</h3>
+        <ul>
+            <li>Voller Support in modernen Browsern (inklusive Chromium-basiertem Edge)</li>
+            <li>Kein Support in IE11 und alten Edge Versionen.</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Custom Elements</h2>
+        <p>JavaScript API zum Erstellen von eigenen HTML Elementen mit gekapselter Funktionalität</p>
+    </section>
+    <section>
+        <h3>CustomElementRegistry</h3>
+        <ul>
+            <li>Registry für Custom Elements auf Webseite.</li>
+            <li>Erlaubt Registrierung von neuen Elementen und die Abfrage von bereits registrierten.</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Definition eines Custom Elements</h3>
+        <p>Ein Custom Element wird durch einen Selektor und ein Klassenobjekt definiert</p>
+        <pre>
+             <code class="hljs javascript" data-trim contenteditable data-noescape>
+                    class FriendlyGreeting extends HTMLElement {
+                        constructor() {
+                            // Always call super first in constructor
+                            super();
+
+                            this.attachShadow({mode: 'open'});
+                            const heading = document.createElement('h1');
+                            heading.textContent = 'Hello from custom element!';
+                            this.shadowRoot.appendChild(heading);
+                        }
+                    }
+
+                    customElements
+                        .define('friendly-greeting', FriendlyGreeting);
+             </code>
+        </pre>
+        <pre>
+             <code class="hljs xml" data-trim contenteditable data-noescape>
+                 &lt;friendly-greeting&gt;&lt;/friendly-greeting&gt;
+             </code>
+        </pre>
+    </section>
+    <section>
+        <h3>Lifecycle callbacks</h3>
+        <p>Lifecycle callbacks werden bei bestimmten Ereignissen aufgerufen:</p>
+        <ul>
+            <li><b>connectedCallback:</b> Wenn das Element in das Dokument eingefügt wird oder im Dokument bewegt wird
+            </li>
+            <li><b>disconnectedCallback:</b> Wenn das Element vom Dokument getrennt wird</li>
+            <li><b>adoptedCallback:</b> Wenn das Element in ein neues Dokument bewegt wird</li>
+            <li><b>attributeChangedCallback:</b> Wenn ein HTML-Attribut des Elements verändert wurde</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Browser support</h3>
+        <ul>
+            <li>Autonomous custom elements (bauen nicht auf einem bestehenden HTML Element)
+                von allen modernen Browsern unterstützt
+            </li>
+            <li>Customized built-in elements (erweitern bestehendes HTML Element) in Chrome, Firefox und neueren
+                Edge Versionen unterstützt. Kein Support in Safari und Opera.
+            </li>
+            <li>Kein Support in IE11 und alten Edge Versionen.</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>HTML Templates</h2>
+        <p>Spezielle HTML Elemente zur Erstellung von wiederverwendbarem Markup</p>
+        <ul>
+            <li>&lt;template&gt;: Wiederverwendbare Vorlage</li>
+            <li>&lt;slot&gt;: Slot für Projektion von Element von ausserhalb dem Template (analog zu zu
+                <i>ng-content</i>)
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h3>&lt;template&gt;</h3>
+        <ul>
+            <li>Definiert Vorlage, die im DOM beliebig oft eingefügt werden kann</li>
+            <li>Wird selber nicht gerendert</li>
+        </ul>
+    </section>
+    <section>
+            <pre>
+                <code class="hljs xml" data-trim contenteditable data-noescape>
+                    &lt;template id=&quot;my-greeting&quot;&gt;
+                        &lt;p&gt;Hello from HTML template!&lt;/p&gt;
+                    &lt;/template&gt;
+                </code>
+            </pre>
+        <pre>
+             <code class="hljs javascript" data-trim contenteditable data-noescape>
+                 let template = document.getElementById('my-greeting');
+                 let templateContent = template.content;
+                 document.body.appendChild(templateContent);
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>&lt;slot&gt;</h3>
+        <ul>
+            <li>Definiert Stelle, an der Inhalt von ausserhalb des Templates eingefügt werden kann</li>
+            <li>Besonders nützlich in Verbindung mit Web Components</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Browser support</h3>
+        <ul>
+            <li>
+                &lt;template&gt;:
+                <ul>
+                    <li>Voller Support in modernen Browsern</li>
+                    <li>Kein Support in IE und alten Edge-Versionen</li>
+                </ul>
+            </li>
+            <li>
+                &lt;slot&gt;:
+                <ul>
+                    <li>Voller Support in modernen Browsern</li>
+                    <li>Kein Support in IE und alten Edge-Versionen</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</section>
