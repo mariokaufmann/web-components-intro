@@ -1,0 +1,214 @@
+<section class="deck-slide">
+    <h1>Web Component aufbauen</h1>
+</section>
+<section>
+    <h2>Endresultat</h2>
+    <h4>Vote Counter Web Component</h4>
+    <div style="display: flex; justify-content: center">
+        <vote-counter>Likes</vote-counter>
+    </div>
+    <pre>
+         <code class="hljs xml" data-trim contenteditable data-noescape>
+            &lt;vote-counter&gt;Likes&lt;/vote-counter&gt;
+        </code>
+    </pre>
+</section>
+<section>
+    <h3>1. Klasse definieren</h3>
+    <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    super();
+
+                    this.attachShadow({mode: 'open'});
+                }
+            }
+        </code>
+    </pre>
+</section>
+<section>
+    <h3>2. Shadow DOM befüllen</h3>
+    <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    super();
+
+                    this.attachShadow({mode: 'open'});
+
+                    const downvoteButton = document.createElement('button');
+                    downvoteButton.innerHTML = '&#8595;';
+                    const counter = document.createElement('span');
+                    counter.innerHTML = '0';
+                    const upvoteButton = document.createElement('button');
+                    upvoteButton.innerHTML = '&#8593;';
+
+                    this.shadowRoot.append(downvoteButton,
+                        counter, upvoteButton);
+                }
+            }
+        </code>
+    </pre>
+</section>
+<section>
+    <h3>3. Styling hinzufügen</h3>
+    <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    ...
+                    const styles = document.createElement('style');
+                    styles.textContent = this.getStyling();
+                    this.shadowRoot.append(styles, downvoteButton,
+                        this.counter, slot, upvoteButton);
+                }
+
+                getStyling() {
+                    return `
+                        :host {
+                            display: flex;
+                            align-items: center;
+                        }
+                        ...
+                    `;
+                }
+            }
+        </code>
+    </pre>
+</section>
+<section>
+    <h3>4. Funktionalität für Buttons</h3>
+    <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    ...
+                    this.counter = document.createElement('span');
+                    this.count = 0;
+                    this.renderCount();
+                    upvoteButton.addEventListener('click',
+                        () => this.incrementVotes());
+                    ...
+                }
+                renderCount() {
+                    this.counter.textContent = this.getAttribute('count');
+                }
+                incrementVotes() {
+                    this.count += 1;
+                    this.renderCount();
+                }
+            }
+        </code>
+    </pre>
+</section>
+<section>
+    <h3>5. Text mit &lt;slot&gt; von aussen setzen</h3>
+    <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    super();
+                    ...
+                    const slot = document.createElement('slot');
+                    this.shadowRoot.append(styles, downvoteButton,
+                        this.counter, slot, upvoteButton);
+                }
+                ...
+            }
+        </code>
+    </pre>
+    <pre>
+         <code class="hljs xml" data-trim contenteditable data-noescape>
+             &lt;vote-counter&gt;Likes&lt;/vote-counter&gt;
+             &lt;vote-counter&gt;Votes&lt;/vote-counter&gt;
+        </code>
+    </pre>
+    <div style="display: flex; justify-content: center">
+        <vote-counter>Likes</vote-counter>
+        <vote-counter>Votes</vote-counter>
+    </div>
+</section>
+<section>
+    <section>
+        <h3>6. State über Attribut behandeln</h3>
+        <ul>
+            <li>Count soll von aussen gesetzt werden können</li>
+            <li>Aktueller Count soll nach aussen reflektiert werden</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Attribut != Property</h3>
+        <ul>
+            <li><i>Count</i> ist eine <i>Property</i> auf der Klasse VoteCounter</li>
+            <li>Properties sind Werte auf JavaScript-Objekten</li>
+        </ul>
+        <ul>
+            <li><i>Attribute</i> gehören zu HTML</li>
+            <li>Können nur Strings enthalten</li>
+        </ul>
+        <p>
+            Durch das Definieren einer Property auf der Custom-Element-Klasse ensteht <i>nicht</i> automatisch
+            ein entsprechendes Attribut auf dem Custom Element in HTML
+        </p>
+    </section>
+    <section>
+        <p>Attribute können in der Custom-Element-Klasse über die gewöhnlichen API Methoden manipuliert werden:</p>
+        <ul>
+            <li><i>Element.getAttribute()</i> zum Auslesen eines Attributs</li>
+            <li><i>Element.setAttribute()</i> zum Setzen eines Attributs</li>
+        </ul>
+    </section>
+    <section>
+        <p>Custom Elements können einen Callback für Änderungen von Attributen definieren:</p>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                attributeChangedCallback(name, oldValue, newValue) {
+                    this.render();
+                }
+
+                static get observedAttributes() {
+                    return ['count'];
+                }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>6. State über Attribut behandeln</h3>
+        <pre>
+        <code class="hljs javascript" data-trim contenteditable data-noescape>
+            class VoteCounter extends HTMLElement {
+                constructor() {
+                    ...
+                    this.setAttribute('count', '0');
+                    ...
+                }
+                renderCount() {
+                    this.counter.textContent = this.getAttribute('count');
+                }
+                incrementVotes() {
+                    const count = this.getAttribute('count');
+                    this.setAttribute('count', `${parseInt(count) + 1}`);
+                }
+                attributeChangedCallback(name, oldValue, newValue) {
+                    this.count = newValue;
+                    this.renderCount();
+                }
+                static get observedAttributes() {
+                    return ['count'];
+                }
+            }
+        </code>
+    </pre>
+    </section>
+</section>
+<section>
+    <div style="display: flex; justify-content: center">
+        <vote-counter>Likes</vote-counter>
+    </div>
+    <pre>
+         <code class="hljs xml" data-trim contenteditable data-noescape>
+            &lt;vote-counter&gt;Likes&lt;/vote-counter&gt;
+        </code>
+    </pre>
+</section>

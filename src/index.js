@@ -10,17 +10,25 @@ import './index.css';
 import './zuehlke-chapter.css';
 import './zuehlke-toc.css';
 
+// import example web components
+import VoteCounter from "./vote-counter";
+customElements.define('vote-counter', VoteCounter);
 
+// import chapters
 import toc from './pages/toc.html';
 import chapter1 from './pages/01.html';
 import chapter2 from './pages/02.html';
-
-document.querySelector('.toc').innerHTML = `<div>${toc}</div>`;
+import chapter3 from './pages/03.html';
 
 const chapters = [
     chapter1,
     chapter2,
+    chapter3,
 ];
+
+// show table of contents
+document.querySelector('.toc').innerHTML = `<div>${toc}</div>`;
+
 
 function loadChapter(index) {
     const chapter = chapters[index - 1];
@@ -33,8 +41,7 @@ function loadChapter(index) {
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
     });
     deck.initialize().then(() => deck.getPlugin( 'highlight' ).hljs.initHighlightingOnLoad());
-    // hljs.initHighlightingOnLoad();
 }
 
-loadChapter(2);
+loadChapter(3);
 
