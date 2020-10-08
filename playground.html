@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class VoteCounter extends HTMLElement {
+        constructor() {
+            super();
+
+            this.attachShadow({mode: 'open'});
+
+            const wrapper = document.createElement('div');
+
+            const minusButton = document.createElement('button');
+            minusButton.textContent = '-';
+            const counter = document.createElement('span');
+            counter.textContent = '0';
+            const plusButton = document.createElement('button');
+            plusButton.textContent = '+';
+
+            wrapper.append(minusButton, counter, plusButton);
+
+            this.shadowRoot.appendChild(wrapper);
+        }
+    }
+
+    customElements.define('vote-counter', VoteCounter);
+</script>
+<vote-counter></vote-counter>
+</body>
+</html>

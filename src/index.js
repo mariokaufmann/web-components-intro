@@ -12,23 +12,29 @@ import './zuehlke-toc.css';
 
 // import example web components
 import VoteCounter from "./vote-counter";
-customElements.define('vote-counter', VoteCounter);
+// import stencil web components
+import {defineCustomElements} from "../stencil-components/loader";
 
 // import chapters
 import toc from './pages/toc.html';
 import chapter1 from './pages/01.html';
 import chapter2 from './pages/02.html';
 import chapter3 from './pages/03.html';
+import chapter4 from './pages/04.html';
+
+// define custom elements
+customElements.define('vote-counter', VoteCounter);
+defineCustomElements().catch(console.error);
 
 const chapters = [
     chapter1,
     chapter2,
     chapter3,
+    chapter4,
 ];
 
 // show table of contents
 document.querySelector('.toc').innerHTML = `<div>${toc}</div>`;
-
 
 function loadChapter(index) {
     const chapter = chapters[index - 1];
@@ -40,8 +46,8 @@ function loadChapter(index) {
         history: true,
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
     });
-    deck.initialize().then(() => deck.getPlugin( 'highlight' ).hljs.initHighlightingOnLoad());
+    deck.initialize().then(() => deck.getPlugin('highlight').hljs.initHighlightingOnLoad());
 }
 
-loadChapter(3);
+loadChapter(4);
 

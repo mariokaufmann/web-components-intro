@@ -1,0 +1,32 @@
+p {
+  margin: 0.5rem 0;
+}
+
+span {
+  margin-right: 0.25rem;
+}
+
+div {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
+
+button.downvote {
+  background-color: red;
+  margin-right: 1rem;
+}
+
+button.upvote {
+  background-color: green;
+  margin-left: 1rem;
+}

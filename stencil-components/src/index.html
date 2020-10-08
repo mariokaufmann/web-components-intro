@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/stencil-components.esm.js"></script>
+    <script nomodule src="/build/stencil-components.js"></script>
+  </head>
+  <body>
+    <vis-vote-counter counter-title="Votes given" >Votes</vis-vote-counter>
+  <script>
+    document.querySelector('vis-vote-counter').addEventListener('countChanged', evt => console.log(`New count: ${evt.detail}.`) )
+  </script>
+  </body>
+</html>
