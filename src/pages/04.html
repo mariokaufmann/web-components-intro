@@ -1,175 +1,105 @@
 <section class="deck-slide">
-    <h1>Web Component mit Toolchain</h1>
+    <h1>JSX / TSX</h1>
 </section>
 <section>
-    <h2>Wieso eine Toolchain?</h2>
+    <h2>JSX</h2>
     <ul>
-        <li>Aufbauen einer Web Component von Hand aufwändig</li>
-        <li>Boilerplate code</li>
+        <li>Syntax-Erweiterung zu JavaScript</li>
+        <li>HTML Markup im JS-Code</li>
+        <li>Bekannt aus react</li>
+        <li>.jsx oder .tsx Files</li>
     </ul>
 </section>
 <section>
-    <h2>Toolchains (Beispiele)</h2>
+    <h3>JSX / TSX</h3>
     <ul>
-        <li>Polymer</li>
-        <li>stencil.js</li>
-        <li>snuggsi</li>
+        <li>HTML Markup im Code</li>
+        <li>JavaScript oder TypeScript</li>
     </ul>
-</section>
-<section>
-    <h2>stencil.js</h2>
-    <ul>
-        <li>stencil.js ist die Toolchain hinter dem Ionic Framework</li>
-        <li>Gut geeignet für das Erstellen von Design Systemen</li>
-        <li>Basiert wo immer möglich auf Web Standards</li>
-        <li>Nicht ein Framework, sondern ein Transpiler</li>
-    </ul>
-</section>
-<section>
-    <h3>Stencil Component API: Decorators</h3>
-    <ul>
-        <li><b>@Component()</b>: Web Component deklarieren</li>
-        <li><b>@Prop()</b>: Property / Attribut deklarieren</li>
-        <li><b>@State()</b>: Internen State für Komponente deklarieren</li>
-        <li><b>@Watch()</b>: Listener für State oder Property Changes deklarieren</li>
-        <li><b>@Element()</b>: Referenz auf Host Element einholen</li>
-        <li><b>@Method()</b>: Public Method auf Komponente deklarieren</li>
-        <li><b>@Event()</b>: DOM event aus der Komponente deklarieren</li>
-        <li><b>@Listen()</b>: Listener für DOM Events deklarieren</li>
-    </ul>
-</section>
-<section>
-    <h3>Stencil Component API: Lifecycle hooks</h3>
-    <ul>
-        <li>connectedCallback()</li>
-        <li>disconnectedCallback()</li>
-        <li>componentWillLoad()</li>
-        <li>componentDidLoad()</li>
-        <li>componentShouldUpdate()</li>
-        <li>componentWillRender()</li>
-        <li>componentWillUpdate()</li>
-        <li>componentDidUpdate()</li>
-        <li><b>render()</b></li>
-    </ul>
-</section>
-<section>
-    <section>
-        <h2>Web Component mit stencil.js</h2>
-        <div style="display: flex; justify-content: center">
-            <vis-vote-counter counter-title="Likes given">Likes</vis-vote-counter>
-        </div>
-    </section>
-    <section>
-        <h3>1. Komponente generieren</h3>
-        <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                @Component({
-                    tag: 'vis-vote-counter',
-                    styleUrl: 'vote-counter.css',
-                    shadow: true,
-                })
-                export class VoteCounter {
-                  render() {
-                    return (
-                      &lt;Host&gt;&lt;/Host&gt;
-                    );
-                  }
-                }
+    <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                  const element = &lt;h1&gt;Hello from JSX!&lt;/h1&gt;;
             </code>
         </pre>
-    </section>
-    <section>
-        <h3>2. JSX</h3>
-        <ul>
-            <li>Syntax-Erweiterung zu JavaScript</li>
-            <li>HTML Markup im JS-Code</li>
-            <li>Bekannt aus react</li>
-            <li>.jsx oder .tsx Files</li>
-        </ul>
-        <pre>
+</section>
+<section>
+    <h3>JSX Expressions</h3>
+    <p>{} erlauben im Markup eingebettete Expressions</p>
+    <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  render() {
-                    return (
-                      &lt;Host&gt;&lt;/Host&gt;
-                    );
-                  }
-            </code>
-        </pre>
-    </section>
-    <section>
-        <h3>2.1 Render function</h3>
-        <p>Rendert die Struktur der Komponente</p>
-        <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  render() {
-                    return (
-                      &lt;p&gt;Hello from component!&lt;/p&gt;
-                    );
-                  }
-            </code>
-        </pre>
-    </section>
-    <section>
-        <h3>2.2 JSX Expressions</h3>
-        <p>{} erlauben im Markup eingebettete Expressions</p>
-        <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  render() {
+                function render() {
                     const name = "Peter Parker";
                     return (
                       &lt;p&gt;Hello from {name}!&lt;/p&gt;
                     );
-                  }
+                }
             </code>
         </pre>
-        <pre>
+    <pre>
             <code class="hljs xml" data-trim contenteditable data-noescape>
                 &lt;p&gt;Hello from Peter Parker!&lt;/p&gt;
             </code>
         </pre>
-    </section>
-    <section>
-        <h3>2.2 JSX Expressions</h3>
-        <pre>
+</section>
+<section>
+    <h3>JSX Expressions</h3>
+    <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  getName(): string {
+                  function getName(): string {
                     return "Peter Parker";
                   }
 
-                  render() {
+                  function render() {
                     return (
                       &lt;p&gt;Hello from {this.getName()}!&lt;/p&gt;
                     );
                   }
             </code>
         </pre>
-        <pre>
+    <pre>
             <code class="hljs xml" data-trim contenteditable data-noescape>
                 &lt;p&gt;Hello from Peter Parker!&lt;/p&gt;
             </code>
         </pre>
-    </section>
-    <section>
-        <h3>2.2 JSX Attribute</h3>
-        <pre>
+</section>
+<section>
+    <h3>JSX Attribute</h3>
+    <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  getImgSrc(): string {
+                  function getImgSrc(): string {
                     return "/img/portrait.jpg";
                   }
 
-                  render() {
+                  function render() {
                     return (
                       &lt;img class="portrait" src={this.getImgSrc()}&gt;&lt;/img&gt;
                     );
                   }
             </code>
         </pre>
-        <pre>
+    <pre>
             <code class="hljs xml" data-trim contenteditable data-noescape>
                 &lt;img class="portrait" src="/img/portrait.jpg"&gt;&lt;/img&gt;
             </code>
         </pre>
-    </section>
+</section>
+<section>
+    <h3>JSX child nodes</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    return (
+                        &lt;div&gt;Hello from Peter Parker!&lt;/p&gt;
+                        &lt;img class="portrait" src={this.getImgSrc()}&gt;&lt;/img&gt;
+                    );
+                  }
+            </code>
+        </pre>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                &lt;img class="portrait" src="/img/portrait.jpg"&gt;&lt;/img&gt;
+            </code>
+        </pre>
 </section>
 <section>
 <pre>

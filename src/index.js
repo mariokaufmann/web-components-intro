@@ -21,6 +21,7 @@ import chapter1 from './pages/01.html';
 import chapter2 from './pages/02.html';
 import chapter3 from './pages/03.html';
 import chapter4 from './pages/04.html';
+import chapter5 from './pages/05.html';
 
 // define custom elements
 customElements.define('vote-counter', VoteCounter);
@@ -31,6 +32,7 @@ const chapters = [
     chapter2,
     chapter3,
     chapter4,
+    chapter5,
 ];
 
 // show table of contents
