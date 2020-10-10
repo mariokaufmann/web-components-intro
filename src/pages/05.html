@@ -62,7 +62,7 @@
     <section>
         <h3>1. Komponente generieren</h3>
         <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
+            <code class="hljs" data-trim contenteditable data-noescape>
                 @Component({
                     tag: 'vis-vote-counter',
                     styleUrl: 'vote-counter.css',
@@ -79,12 +79,22 @@
         </pre>
     </section>
     <section>
-        <h3>2. JSX</h3>
+        <h3>2. Render function</h3>
+        <p>Rendert die Struktur der Komponente</p>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  render() {
+                    return (
+                      &lt;Host&gt;&lt;/Host&gt;
+                    );
+                  }
+            </code>
+        </pre>
+    </section>
+    <section>
         <ul>
-            <li>Syntax-Erweiterung zu JavaScript</li>
-            <li>HTML Markup im JS-Code</li>
-            <li>Bekannt aus react</li>
-            <li>.jsx oder .tsx Files</li>
+            <li>Immer JSX in () einbetten</li>
+            <li>&lt;Host&gt; erlaubt Zugriff auf Host Element</li>
         </ul>
         <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
@@ -97,82 +107,375 @@
         </pre>
     </section>
     <section>
-        <h3>2.1 Render function</h3>
-        <p>Rendert die Struktur der Komponente</p>
+        <p>render() gibt JSX zurück</p>
         <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
                   render() {
                     return (
-                      &lt;p&gt;Hello from component!&lt;/p&gt;
+                      &lt;Host&gt;
+                         &lt;div&gt;
+                            &lt;p&gt;This is an example text.&lt;/p&gt;
+                         &lt;/div&gt;
+                      &lt;/Host&gt;
                     );
                   }
             </code>
         </pre>
     </section>
     <section>
-        <h3>2.2 JSX Expressions</h3>
-        <p>{} erlauben im Markup eingebettete Expressions</p>
+        <h3>2 Grundstruktur der Komponente</h3>
+        <p>vote-counter.tsx</p>
         <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                 @Component({
+                    tag: 'vis-vote-counter',
+                    styleUrl: 'vote-counter.css',
+                    shadow: true,
+                })
+                export class VoteCounter {
                   render() {
-                    const name = "Peter Parker";
                     return (
-                      &lt;p&gt;Hello from {name}!&lt;/p&gt;
+                      &lt;Host&gt;
+                         &lt;div&gt;
+                            &lt;button&gt;&amp;#8595;&lt;/button&gt;
+                            &lt;span&gt;0&lt;/span&gt;
+                            &lt;button&gt;&amp;#8593;&lt;/button&gt;
+                        &lt;/div&gt;
+                      &lt;/Host&gt;
                     );
                   }
             </code>
         </pre>
+    </section>
+    <section>
+        <h3>2 Grundstruktur der Komponente</h3>
+        <p>vote-counter.tsx</p>
         <pre>
-            <code class="hljs xml" data-trim contenteditable data-noescape>
-                &lt;p&gt;Hello from Peter Parker!&lt;/p&gt;
+            <code class="hljs" data-trim contenteditable data-noescape>
+                 @Component({
+                    tag: 'vis-vote-counter',
+                    styleUrl: 'vote-counter.css',
+                    shadow: true,
+                })
+                export class VoteCounter {
+                  render() {
+                    return (
+                      &lt;Host&gt;
+                         &lt;div&gt;
+                            &lt;button class="downvote"&gt;&amp;#8595;&lt;/button&gt;
+                            &lt;span&gt;0&lt;/span&gt;
+                            &lt;button class="upvote"&gt;&amp;#8593;&lt;/button&gt;
+                        &lt;/div&gt;
+                      &lt;/Host&gt;
+                    );
+                  }
             </code>
         </pre>
     </section>
     <section>
-        <h3>2.2 JSX Expressions</h3>
+        <h3>3 Grundstyling hinzufügen</h3>
+        <p>vote-counter.css</p>
         <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  getName(): string {
-                    return "Peter Parker";
-                  }
+            <code class="hljs css" data-trim contenteditable data-noescape>
+                 button {
+                  width: 2rem;
+                  ...
+                }
+
+                button.downvote {
+                  background-color: red;
+                  margin-right: 1rem;
+                }
+
+                button.upvote {
+                  background-color: green;
+                  margin-left: 1rem;
+                }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>@Prop()</h3>
+        <ul>
+            <li>Definiert eine Property</li>
+            <li>Analog Input() in Angular</li>
+            <li>Von aussen setzbar</li>
+            <li>Properties immutable by default innerhalb Komponenten</li>
+            <li>Änderung (reference equals) löst render() aus</li>
+        </ul>
+    </section>
+    <section>
+        <h3>4 Property für Titel</h3>
+        <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+                  @Prop()
+                  counterTitle: string = '';
 
                   render() {
                     return (
-                      &lt;p&gt;Hello from {this.getName()}!&lt;/p&gt;
+                      &lt;Host&gt;
+                        {this.counterTitle &amp;&amp; &lt;p&gt;{this.counterTitle}&lt;/p&gt;}
+                         &lt;div&gt;
+                           ...
+                         &lt;/div&gt;
+                      &lt;/Host&gt;
                     );
                   }
-            </code>
-        </pre>
-        <pre>
-            <code class="hljs xml" data-trim contenteditable data-noescape>
-                &lt;p&gt;Hello from Peter Parker!&lt;/p&gt;
             </code>
         </pre>
     </section>
     <section>
-        <h3>2.2 JSX Attribute</h3>
+        <h3>4 Property für Titel</h3>
         <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  getImgSrc(): string {
-                    return "/img/portrait.jpg";
-                  }
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                  &lt;vis-vote-counter
+                    counter-title="Likes given"
+                  &gt;&lt;/vis-vote-counter&gt;
+            </code>
+     </pre>
+    </section>
+    <section>
+        <ul>
+            <li>JS Property &#8800; HTML Attribut</li>
+            <li>
+                @Prop() schaut auf Änderungen am gleichen HTML Attribut
+                <ul>
+                    <li>HTML Attribut: dash-case, JS Property: camelCase</li>
+                    <li>Primitiver Typ: stencil.js generiert Attribut zu Property</li>
+                    <li>Komplexer Typ: stencil.js generiert nur Property</li>
+                    <li>DOM Attribute können nur Strings sein</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+                  @Prop()
+                  counterTitle: string = '';
+                  @Prop()
+                  showVotes: boolean;
+                  @Prop()
+                  voterData: VoterData;
+                  ...
+                }
+            </code>
+        </pre>
+        <p>Es wird kein voter-data Attribut generiert</p>
+        <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                  &lt;vis-vote-counter
+                    counter-title="Likes given"
+                    showVotes
+                  &gt;&lt;/vis-vote-counter&gt;
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>@State()</h3>
+        <ul>
+            <li>Definiert internen State</li>
+            <li>Nicht von aussen sichtbar</li>
+            <li>Änderung (reference equals) löst render() aus</li>
+        </ul>
+    </section>
+    <section>
+        <h3>5 @State() für Count</h3>
+        <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+                  @Prop()
+                  counterTitle: string = '';
+                  @State()
+                  count: number = 0;
 
                   render() {
                     return (
-                      &lt;img class="portrait" src={this.getImgSrc()}&gt;&lt;/img&gt;
+                      &lt;Host&gt;
+                        {this.counterTitle &amp;&amp; &lt;p&gt;{this.counterTitle}&lt;/p&gt;}
+                         &lt;div&gt;
+                           &lt;button class="downvote"&gt;&amp;#8595;&lt;/button&gt;
+                            &lt;span&gt;{this.count}&lt;/span&gt;
+                            &lt;button class="upvote"&gt;&amp;#8593;&lt;/button&gt;
+                         &lt;/div&gt;
+                      &lt;/Host&gt;
+                    );
+                  }
+                }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>DOM Events</h3>
+        <ul>
+            <li>stencil.js arbeitet mit DOM Events</li>
+            <li>Event Handlers definierbar direkt in JSX</li>
+        </ul>
+        <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                  render() {
+                    return (
+                      &lt;Host&gt;
+                        {this.counterTitle &amp;&amp; &lt;p&gt;{this.counterTitle}&lt;/p&gt;}
+                         &lt;div&gt;
+                            ...
+                            &lt;button class=&quot;upvote&quot;
+                                onClick={() =&gt; this.incrementCount()}
+                            &gt;&amp;#8593;&lt;/button&gt;
+                         &lt;/div&gt;
+                      &lt;/Host&gt;
                     );
                   }
             </code>
         </pre>
+    </section>
+    <section>
+        <h3>6. Events auf Buttons behandeln</h3>
         <pre>
-            <code class="hljs xml" data-trim contenteditable data-noescape>
-                &lt;img class="portrait" src="/img/portrait.jpg"&gt;&lt;/img&gt;
+            <code class="hljs" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+                    @State()
+                    count: number = 0;
+                    incrementCount() {
+                        this.count += 1;
+                    }
+                    render() {
+                        return (
+                            ...
+                            &lt;button class=&quot;upvote&quot;
+                                onClick={() =&gt; this.incrementCount()}
+                            &gt;&amp;#8593;&lt;/button&gt;
+                            ...
+                        );
+                    }
+                }
+
             </code>
         </pre>
+    </section>
+    <section>
+        <h3>@Watch()</h3>
+        <ul>
+            <li>Beobachtet Änderungen an Property oder State</li>
+            <li>Analog zu ngOnChange in Angular</li>
+        </ul>
+    </section>
+    <section>
+        <h3>7. Side Effects mit @Watch()</h3>
+        <pre>
+            <code class="hljs" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+                    @Prop()
+                    counterTitle: string = '';
+                    @Watch('counterTitle')
+                    handler(newValue: string, oldValue: string) {
+                        console.log(`Old title: ${oldValue},
+                            new value: ${newValue}.`);
+                    }
+                }
+
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>@Event()</h3>
+        <ul>
+            <li>Definiert EventEmitter</li>
+            <li>Analog zu @Output() in Angular</li>
+            <li>Standard CustomEvent mit Payload</li>
+        </ul>
+    </section>
+    <section>
+        <h3>8. Count ausgeben mit @Event()</h3>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+
+                  @State()
+                  count: number = 0;
+
+                  @Event()
+                  countChanged: EventEmitter&lt;number&gt;;
+
+                  incrementCount() {
+                    this.count += 1;
+                    this.countChanged.emit(this.count);
+                  }
+                }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>@Listen()</h3>
+        <ul>
+            <li>DOM Events auf Komponente abhören</li>
+            <li>Target kann auch document, window, usw. sein</li>
+        </ul>
+    </section>
+    <section>
+        <h3>9. Event abhören mit @Listen()</h3>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                @Component(...)
+                export class VoteCounter {
+
+                  @Listen('dblclick')
+                  doubleClickHandler() {
+                    console.log('Double click!');
+                  }
+
+                }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Fertige Komponente</h2>
+        <div style="display: flex; justify-content: center">
+            <vis-vote-counter counter-title="Likes given">Likes</vis-vote-counter>
+        </div>
     </section>
 </section>
 <section>
-<pre>
+    <section>
+        <h2>Nested stencil.js Komponenten</h2>
+        <div style="display: flex; justify-content: center">
+            <vis-nested-counter counter-title="Likes given">Likes</vis-nested-counter>
+        </div>
+    </section>
+    <section>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                @Component({
+                  tag: 'vis-nested-vote-counter',
+                  shadow: true,
+                })
+                export class VisNestedVoteCounter {
+                  render() {
+                    return (
+                      &lt;Host&gt;
+                        &lt;vis-vote-counter
+                            counterTitle=&quot;Votes&quot;&gt;Votes&lt;/vis-vote-counter&gt;
+                        &lt;vis-vote-counter
+                            counterTitle=&quot;Likes&quot;&gt;Likes&lt;/vis-vote-counter&gt;
+                      &lt;/Host&gt;
+                    );
+                  }
+                }
+            </code>
+        </pre>
+    </section>
+
+</section>
+<section>
+    <pre>
     <code class="hljs javascript" data-trim contenteditable data-noescape>
         @Component({
             tag: 'vis-vote-counter',

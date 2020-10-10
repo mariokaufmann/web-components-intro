@@ -6,11 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface VisNestedCounter {
+    }
     interface VisVoteCounter {
         "counterTitle": string;
     }
 }
 declare global {
+    interface HTMLVisNestedCounterElement extends Components.VisNestedCounter, HTMLStencilElement {
+    }
+    var HTMLVisNestedCounterElement: {
+        prototype: HTMLVisNestedCounterElement;
+        new (): HTMLVisNestedCounterElement;
+    };
     interface HTMLVisVoteCounterElement extends Components.VisVoteCounter, HTMLStencilElement {
     }
     var HTMLVisVoteCounterElement: {
@@ -18,15 +26,19 @@ declare global {
         new (): HTMLVisVoteCounterElement;
     };
     interface HTMLElementTagNameMap {
+        "vis-nested-counter": HTMLVisNestedCounterElement;
         "vis-vote-counter": HTMLVisVoteCounterElement;
     }
 }
 declare namespace LocalJSX {
+    interface VisNestedCounter {
+    }
     interface VisVoteCounter {
         "counterTitle"?: string;
         "onCountChanged"?: (event: CustomEvent<number>) => void;
     }
     interface IntrinsicElements {
+        "vis-nested-counter": VisNestedCounter;
         "vis-vote-counter": VisVoteCounter;
     }
 }
@@ -34,6 +46,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "vis-nested-counter": LocalJSX.VisNestedCounter & JSXBase.HTMLAttributes<HTMLVisNestedCounterElement>;
             "vis-vote-counter": LocalJSX.VisVoteCounter & JSXBase.HTMLAttributes<HTMLVisVoteCounterElement>;
         }
     }

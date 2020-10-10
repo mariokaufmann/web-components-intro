@@ -76,12 +76,12 @@
                     );
                   }
             </code>
-        </pre>
+    </pre>
     <pre>
             <code class="hljs xml" data-trim contenteditable data-noescape>
                 &lt;img class="portrait" src="/img/portrait.jpg"&gt;&lt;/img&gt;
             </code>
-        </pre>
+    </pre>
 </section>
 <section>
     <h3>JSX child nodes</h3>
@@ -89,75 +89,142 @@
             <code class="hljs javascript" data-trim contenteditable data-noescape>
                   function render() {
                     return (
-                        &lt;div&gt;Hello from Peter Parker!&lt;/p&gt;
-                        &lt;img class="portrait" src={this.getImgSrc()}&gt;&lt;/img&gt;
+                        &lt;ul&gt;
+                            &lt;li&gt;Hello from Obi-Wan Kenobi!&lt;/li&gt;
+                            &lt;li&gt;Hello from Luke Skywalker!&lt;/li&gt;
+                        &lt;/ul&gt;
                     );
                   }
             </code>
-        </pre>
+    </pre>
     <pre>
             <code class="hljs xml" data-trim contenteditable data-noescape>
-                &lt;img class="portrait" src="/img/portrait.jpg"&gt;&lt;/img&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Hello from Obi-Wan Kenobi!&lt;/li&gt;
+                    &lt;li&gt;Hello from Luke Skywalker!&lt;/li&gt;
+                &lt;/ul&gt;
             </code>
-        </pre>
+     </pre>
 </section>
 <section>
-<pre>
-    <code class="hljs javascript" data-trim contenteditable data-noescape>
-        @Component({
-            tag: 'vis-vote-counter',
-            styleUrl: 'vote-counter.css',
-            shadow: true,
-        })
-        export class VoteCounter {
-          @Prop()
-          counterTitle: string = '';
-
-          @State()
-          count: number = 0;
-
-          @Event()
-          countChanged: EventEmitter&lt;number&gt;;
-
-          render() {
-            return (
-              &lt;Host&gt;
-                {this.counterTitle &amp;&amp; &lt;p&gt;{this.counterTitle}&lt;/p&gt;}
-                &lt;div&gt;
-                  &lt;button class=&quot;downvote&quot; onClick={() =&gt; this.decrementCount()}&gt;&amp;#8595;&lt;/button&gt;
-                    &lt;span&gt;{this.count}&lt;/span&gt;
-                  &lt;slot/&gt;
-                  &lt;button class=&quot;upvote&quot; onClick={() =&gt; this.incrementCount()}&gt;&amp;#8593;&lt;/button&gt;
-                &lt;/div&gt;
-              &lt;/Host&gt;
-            );
-          }
-
-          incrementCount() {
-            this.count += 1;
-            this.countChanged.emit(this.count);
-          }
-
-          decrementCount() {
-            if (this.count === 0) {
-              return;
-            }
-
-            this.count -= 1;
-            this.countChanged.emit(this.count);
-          }
-
-          @Watch('counterTitle')
-          counterTitleHandler(newValue: string, oldValue: string) {
-            console.log(`Old title: ${oldValue}, new value: ${newValue}.`);
-          }
-
-          @Listen('dblclick')
-          doubleClickHandler() {
-            console.log('Double click!');
-          }
-
-        }
-    </code>
-</pre>
+    <h3>JSX conditionals</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    const loggedIn = ...;
+                    if (loggedIn) {
+                        return &lt;UserGreeting&gt;Hello user!&lt;/UserGreeting&gt;;
+                    }
+                    return &lt;GuestGreeting&gt;Hello guest!&lt;/GuestGreeting&gt;;
+                  }
+            </code>
+    </pre>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                &lt;GuestGreeting&gt;Hello guest!&lt;/GuestGreeting&gt;
+            </code>
+    </pre>
+</section>
+<section>
+    <h3>JSX conditionals</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    const unreadMessages = ...;
+                    return (
+                        &lt;h1&gt;Hello User!&lt;/h1&gt;
+                        {
+                            unreadMessages.length > 0 &&
+                            &lt;p&gt;
+                                You have {unreadMessages.length} messages!
+                            &lt;/p&gt;
+                        }
+                    );
+                  }
+            </code>
+    </pre>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                &lt;h1&gt;Hello User!&lt;/h1&gt;
+                &lt;p&gt;You have 3 messages!&lt;/p&gt;
+            </code>
+    </pre>
+</section>
+<section>
+    <h3>JSX conditionals</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    const unreadMessages = ...;
+                    return (
+                        &lt;h1&gt;Hello User!&lt;/h1&gt;
+                        {
+                            unreadMessages.length > 0 ||
+                            &lt;p&gt;
+                                You have no unread messages!
+                            &lt;/p&gt;
+                        }
+                    );
+                  }
+            </code>
+    </pre>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                &lt;h1&gt;Hello User!&lt;/h1&gt;
+                &lt;p&gt;You have no unread messages!&lt;/p&gt;
+            </code>
+    </pre>
+</section>
+<section>
+    <h3>JSX conditionals</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    const unreadMessages = ...;
+                    return (
+                        &lt;h1&gt;Hello User!&lt;/h1&gt;
+                        {
+                            unreadMessages.length > 0
+                            ?
+                            &lt;p&gt;
+                                You have {unreadMessages.length} messages!
+                            &lt;/p&gt;
+                            :
+                            &lt;p&gt;
+                                You have no unread messages!
+                            &lt;/p&gt;
+                        }
+                    );
+                  }
+            </code>
+    </pre>
+</section>
+<section>
+    <h3>JSX Listen</h3>
+    <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  function render() {
+                    const numbers = [1, 2, 3];
+                    return (
+                        &lt;ul&gt;
+                            {
+                                numbers.map(number => &lt;li&gt;{number}&lt;/li&gt;
+                            }
+                        &lt;/ul&gt;
+                    );
+                  }
+            </code>
+    </pre>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                &lt;ul&gt;
+                    &lt;li&gt;1&lt;/li&gt;
+                    &lt;li&gt;2&lt;/li&gt;
+                    &lt;li&gt;3&lt;/li&gt;
+                &lt;/ul&gt;
+            </code>
+     </pre>
+</section>
+<section>
+    <h2>JSX Übungen</h2>
 </section>

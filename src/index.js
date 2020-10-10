@@ -6,9 +6,9 @@ import RevealNotes from 'reveal.js/plugin/notes/notes.esm';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/plugin/highlight/monokai.css';
 
-import './index.css';
 import './zuehlke-chapter.css';
 import './zuehlke-toc.css';
+import './index.css';
 
 // import example web components
 import VoteCounter from "./vote-counter";
@@ -51,5 +51,5 @@ function loadChapter(index) {
     deck.initialize().then(() => deck.getPlugin('highlight').hljs.initHighlightingOnLoad());
 }
 
-loadChapter(4);
+loadChapter(5);
 
