@@ -1,0 +1,35 @@
+<section class="deck-slide">
+    <h1>Styling & Shadow DOM</h1>
+</section>
+<section>
+    <p>Shadow DOM beeinflusst Styling entscheidend</p>
+    <ul>
+        <li>DOM ist isoliert</li>
+        <li>Styling ist auch isoliert</li>
+    </ul>
+</section>
+<section>
+    <h2>Scoped CSS</h2>
+    <ul>
+        Generell:
+        <br />
+        <li>CSS Selektoren von ausserhalb nicht angewendet in Komponente</li>
+        <li>CSS Selektoren von innerhalb der Komponente nicht angewendet ausserhalb</li>
+    </ul>
+</section>
+<section>
+    <h2>:host</h2>
+    <p>Mit dem :host Selektor kann sich ein Element selber stylen</p>
+    <ul>
+        <li>Styles auf dem Element von aussen haben höhere Priorität</li>
+        <li>:host(selector), falls Element selector erfüllt</li>
+    </ul>
+</section>
+<section>
+    <h2>:host-context(selector)</h2>
+    <p>Kommt zur Anwendung, falls Element <br/>oder einen Ancestor selector erfüllt</p>
+</section>
+<section>
+    <h2>:slotted(selector)</h2>
+    <p>Kommt zur Anwendung, falls Element in Slot einen selector erfüllt</p>
+</section>

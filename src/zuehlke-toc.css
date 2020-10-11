@@ -70,14 +70,15 @@
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.4);
 }
 
-.toc div section a {
+.toc div section {
     display: block;
     width: 100%;
     height: 100%;
     overflow: auto;
     text-decoration: none;
-    color: inherit;
+    color: white;
     padding: 15px;
+    cursor: pointer;
 }
 
 .toc div section a:visited {

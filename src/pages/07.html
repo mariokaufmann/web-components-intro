@@ -1,0 +1,36 @@
+<section class="deck-slide">
+    <h1>Framework Integration</h1>
+</section>
+<section>
+    <p>Framework Integration nicht überall gleich gut</p>
+    <p><a href="https://custom-elements-everywhere.com/">https://custom-elements-everywhere.com/</a></p>
+</section>
+<section>
+    <h3>Angular</h3>
+    <ul>
+        <li>Gute Integration</li>
+        <li>Komplexe Properties können mit der gewohnten Syntax gesetzt werden</li>
+        <li>Kein Autocomplete, keine FormControls, keine generischen Komponenten</li>
+    </ul>
+    <pre>
+            <code class="hljs xml" data-trim contenteditable data-noescape>
+                  &lt;vis-vote-counter
+                    [counterTitle]="Likes given"
+                    showVotes
+                    [voterData]="voterData"
+                  &gt;&lt;/vis-vote-counter&gt;
+            </code>
+        </pre>
+</section>
+<section>
+    <h3>React</h3>
+    <ul>
+        <li>Daten werden immer als HTML Attribute gesetzt</li>
+        <li>Komplexe Properties können nur stringified übergeben werden</li>
+        <li>Events von Custom Elements können nur mit Workarounds abgehört werden</li>
+    </ul>
+</section>
+<section>
+    <p>Aktueller Stand für andere Frameworks</p>
+    <p><a href="https://custom-elements-everywhere.com/">https://custom-elements-everywhere.com/</a></p>
+</section>

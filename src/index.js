@@ -22,6 +22,9 @@ import chapter2 from './pages/02.html';
 import chapter3 from './pages/03.html';
 import chapter4 from './pages/04.html';
 import chapter5 from './pages/05.html';
+import chapter6 from './pages/06.html';
+import chapter7 from './pages/07.html';
+import chapter8 from './pages/08.html';
 
 // define custom elements
 customElements.define('vote-counter', VoteCounter);
@@ -33,23 +36,36 @@ const chapters = [
     chapter3,
     chapter4,
     chapter5,
+    chapter6,
+    chapter7,
+    chapter8,
 ];
 
-// show table of contents
-document.querySelector('.toc').innerHTML = `<div>${toc}</div>`;
+function loadToc() {
+    document.querySelector('.toc').innerHTML = `<div>${toc}</div>`;
+    chapters.forEach((chapter, index) => {
+        const chapterNumber = index + 1;
+        const chapterSection = document.getElementById(`chapter${chapterNumber}`);
+        chapterSection.addEventListener('click', () => loadChapter(chapterNumber));
+    });
+}
 
 function loadChapter(index) {
     const chapter = chapters[index - 1];
 
     document.querySelector('.toc').innerHTML = '';
-    document.querySelector('.slides-container').innerHTML = `<div class="reveal"><div class="slides">${chapter}</div></div>`;
+    document.querySelector('.slides-container').innerHTML = `<div class="reveal chapter${index}"><div class="slides">${chapter}</div></div>`;
 
-    const deck = new Reveal(document.querySelector('.reveal'), {
+    const deck = new Reveal(document.querySelector(`.chapter${index}`), {
         history: true,
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
     });
-    deck.initialize().then(() => deck.getPlugin('highlight').hljs.initHighlightingOnLoad());
+    deck.initialize().then(() => {
+        deck.getPlugin('highlight').hljs.initHighlightingOnLoad();
+        deck.slide(0, 0, 0);
+        deck.sync();
+    });
 }
 
-loadChapter(5);
-
+// show table of contents
+loadToc();

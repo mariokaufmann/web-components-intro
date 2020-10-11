@@ -12,3 +12,17 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+.home {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    z-index: 2;
+    padding: 10px;
+    cursor: pointer;
+    fill: #ff820a;
+}
+
+.home:hover {
+    background-color: #666;
+}
