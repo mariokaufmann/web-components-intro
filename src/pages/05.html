@@ -92,21 +92,6 @@
         </pre>
     </section>
     <section>
-        <ul>
-            <li>Immer JSX in () einbetten</li>
-            <li>&lt;Host&gt; erlaubt Zugriff auf Host Element</li>
-        </ul>
-        <pre>
-            <code class="hljs javascript" data-trim contenteditable data-noescape>
-                  render() {
-                    return (
-                      &lt;Host&gt;&lt;/Host&gt;
-                    );
-                  }
-            </code>
-        </pre>
-    </section>
-    <section>
         <p>render() gibt JSX zurück</p>
         <pre>
             <code class="hljs javascript" data-trim contenteditable data-noescape>
@@ -117,6 +102,21 @@
                             &lt;p&gt;This is an example text.&lt;/p&gt;
                          &lt;/div&gt;
                       &lt;/Host&gt;
+                    );
+                  }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <ul>
+            <li>Immer JSX in () einbetten</li>
+            <li>&lt;Host&gt; erlaubt Zugriff auf Host Element</li>
+        </ul>
+        <pre>
+            <code class="hljs javascript" data-trim contenteditable data-noescape>
+                  render() {
+                    return (
+                      &lt;Host&gt;&lt;/Host&gt;
                     );
                   }
             </code>
@@ -148,7 +148,7 @@
         </pre>
     </section>
     <section>
-        <h3>2 Grundstruktur der Komponente</h3>
+        <h3>3 Grundstyling hinzufügen</h3>
         <p>vote-counter.tsx</p>
         <pre>
             <code class="hljs" data-trim contenteditable data-noescape>

@@ -37,11 +37,13 @@
 
                     this.attachShadow({mode: 'open'});
 
-                    const downvoteButton = document.createElement('button');
+                    const downvoteButton = document
+                        .createElement('button');
                     downvoteButton.innerHTML = '&#8595;';
                     const counter = document.createElement('span');
                     counter.innerHTML = '0';
-                    const upvoteButton = document.createElement('button');
+                    const upvoteButton = document
+                        .createElement('button');
                     upvoteButton.innerHTML = '&#8593;';
 
                     this.shadowRoot.append(downvoteButton,
@@ -92,7 +94,8 @@
                     ...
                 }
                 renderCount() {
-                    this.counter.textContent = this.getAttribute('count');
+                    this.counter.textContent =
+                        this.getAttribute('count');
                 }
                 incrementVotes() {
                     this.count += 1;
@@ -179,12 +182,11 @@
         <code class="hljs javascript" data-trim contenteditable data-noescape>
             class VoteCounter extends HTMLElement {
                 constructor() {
-                    ...
                     this.setAttribute('count', '0');
-                    ...
                 }
                 renderCount() {
-                    this.counter.textContent = this.getAttribute('count');
+                    this.counter.textContent =
+                        this.getAttribute('count');
                 }
                 incrementVotes() {
                     const count = this.getAttribute('count');
